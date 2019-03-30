@@ -10,17 +10,18 @@ import java.util.Map;
 @Service
 public class AuthService {
 
-    private RestApiTemplate authWebService;
+    private RestApiTemplate authApi;
 
-    public AuthService(@Qualifier("authApi") RestApiTemplate authWebService) {
-        this.authWebService = authWebService;
+    public AuthService(@Qualifier("authApi") RestApiTemplate authApi) {
+        this.authApi = authApi;
     }
 
-    public void createUser(String accountId, String password) {
+    public void createUser(String email, String password, String accountId) {
         Map<String, String> params = new HashMap<>();
-        params.put("accountId", accountId);
+        params.put("email", email);
         params.put("password", password);
-        authWebService.post("/user/register?accountId={accountId}&password={password}", params, Void.class);
+        params.put("accountId", accountId);
+        authApi.post("/user/register?username={email}&password={password}&accountId={accountId}", params, Void.class);
     }
 
 }

@@ -18,7 +18,7 @@ class RegistrationService {
 
     void registerNewUser(Request request) {
         Account account = accountsService.createAccount(request.getEmail());
-        authService.createUser(account.getId(), request.getPassword());
+        authService.createUser(request.getEmail(), request.getPassword(), account.getId());
     }
 
 }
