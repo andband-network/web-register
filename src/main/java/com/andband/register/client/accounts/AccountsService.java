@@ -13,10 +13,11 @@ public class AccountsService {
         this.accountsApi = accountsApi;
     }
 
-    public Account createAccount(String email) {
+    public Account createAccount(String name, String email) {
         Account account = new Account();
+        account.setName(name);
         account.setEmail(email);
-        return accountsApi.post(account, Account.class);
+        return accountsApi.post("/accounts", account, Account.class);
     }
 
 }

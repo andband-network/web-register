@@ -43,14 +43,6 @@ public class RestApiTemplate {
         return response.getBody();
     }
 
-    public <T, K> T post(K requestBody, Class<T> responseType) {
-        return post("", requestBody, responseType, null);
-    }
-
-    public <T> T post(Map<String, ?> uriVariables, Class<T> responseType) {
-        return post("", null, responseType, uriVariables);
-    }
-
     public <T, K> T post(String resourceUrl, K requestBody, Class<T> responseType) {
         return post(resourceUrl, requestBody, responseType, null);
     }

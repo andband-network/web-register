@@ -48,20 +48,21 @@ public class RegisterApplication {
     }
 
     @LoadBalanced
-    @Bean("loadBalancedRestTemplate")
-    public RestTemplate loadBalancedRestTemplate(RestTemplateBuilder builder) {
+    @Bean("restTemplate")
+    public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
 
     @LoadBalanced
     @Bean("oAuth2RestTemplate")
-    public OAuth2RestTemplate restTemplate(OAuth2ProtectedResourceDetails resourceDetails, @Qualifier("loadBalancedRestTemplate") RestTemplate loadBalancedRestTemplate) {
+    public OAuth2RestTemplate oAuth2RestTemplate(OAuth2ProtectedResourceDetails resourceDetails,
+                                                 @Qualifier("restTemplate") RestTemplate restTemplate) {
         OAuth2ClientContext context = new DefaultOAuth2ClientContext(new DefaultAccessTokenRequest());
         OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(resourceDetails, context);
 
         AccessTokenProvider accessTokenProvider = new AccessTokenProviderChain(
                 Collections.singletonList(
-                        new CustomClientCredentialsAccessTokenProvider(loadBalancedRestTemplate)
+                        new CustomClientCredentialsAccessTokenProvider(restTemplate)
                 )
         );
         oAuth2RestTemplate.setAccessTokenProvider(accessTokenProvider);
@@ -69,16 +70,28 @@ public class RegisterApplication {
         return oAuth2RestTemplate;
     }
 
-    @Bean("accountsApi")
-    public RestApiTemplate apiWebService(@Qualifier("loadBalancedRestTemplate") RestTemplate restTemplate,
-                                         @Value("${andband.accounts-api.endpoint}") String accountApiEndpoint) {
-        return createRestApiTemplate(restTemplate, accountApiEndpoint);
+
+    @Bean("temp")
+    public RestTemplate temp(RestTemplateBuilder builder) {
+        return builder.build();
     }
 
     @Bean("authApi")
-    public RestApiTemplate authWebService(@Qualifier("loadBalancedRestTemplate") RestTemplate restTemplate,
-                                          @Value("${andband.auth-api.endpoint}") String authApiEndpoint) {
+    public RestApiTemplate authRestTemplate(@Qualifier("oAuth2RestTemplate") RestTemplate restTemplate,
+                                            @Value("${andband.auth-api.endpoint}") String authApiEndpoint) {
         return createRestApiTemplate(restTemplate, authApiEndpoint);
+    }
+
+    @Bean("accountsApi")
+    public RestApiTemplate accountsRestTemplate(@Qualifier("oAuth2RestTemplate") RestTemplate restTemplate,
+                                                @Value("${andband.accounts-api.endpoint}") String accountsApiEndpoint) {
+        return createRestApiTemplate(restTemplate, accountsApiEndpoint);
+    }
+
+    @Bean("profilesApi")
+    public RestApiTemplate profilesRestTemplate(@Qualifier("oAuth2RestTemplate") RestTemplate restTemplate,
+                                                @Value("${andband.profiles-api.endpoint}") String profilesApiEndpoint) {
+        return createRestApiTemplate(restTemplate, profilesApiEndpoint);
     }
 
     private RestApiTemplate createRestApiTemplate(RestTemplate restTemplate, String apiEndpoint) {
