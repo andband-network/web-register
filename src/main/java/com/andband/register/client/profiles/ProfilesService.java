@@ -4,6 +4,9 @@ import com.andband.register.util.RestApiTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class ProfilesService {
 
@@ -14,10 +17,10 @@ public class ProfilesService {
     }
 
     public void createProfile(String accountId, String name) {
-        Profile profile = new Profile();
-        profile.setAccountId(accountId);
-        profile.setName(name);
-        profilesApi.post("/profiles", profile, Profile.class);
+        Map<String, String> params = new HashMap<>();
+        params.put("accountId", accountId);
+        params.put("name", name);
+        profilesApi.post("/profiles/?accountId={accountId}&name={name}", params, Void.class);
     }
 
 }
