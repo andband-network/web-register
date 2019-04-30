@@ -63,11 +63,22 @@ public class RestApiTemplate {
             response = restTemplate.postForEntity(url, httpEntity, responseType, params);
         }
 
-        if (!response.getStatusCode().equals(HttpStatus.CREATED)) {
+        if (!isSuccess(response.getStatusCode())) {
             throw new RestApiTemplateException("returned http status code: " + response.getStatusCode() + " from url: " + url);
         }
 
         return response.getBody();
+    }
+
+    private boolean isSuccess(HttpStatus httpStatus) {
+        switch (httpStatus) {
+            case OK:
+            case CREATED:
+            case NO_CONTENT:
+                return true;
+            default:
+                return false;
+        }
     }
 
 }

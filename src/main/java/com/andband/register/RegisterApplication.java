@@ -70,12 +70,6 @@ public class RegisterApplication {
         return oAuth2RestTemplate;
     }
 
-
-    @Bean("temp")
-    public RestTemplate temp(RestTemplateBuilder builder) {
-        return builder.build();
-    }
-
     @Bean("authApi")
     public RestApiTemplate authRestTemplate(@Qualifier("oAuth2RestTemplate") RestTemplate restTemplate,
                                             @Value("${andband.auth-api.endpoint}") String authApiEndpoint) {
