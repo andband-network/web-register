@@ -24,4 +24,10 @@ public class AuthService {
         authApi.post("/user/register?username={email}&password={password}&accountId={accountId}", params, Void.class);
     }
 
+    public void enableUser(String accountId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("accountId", accountId);
+        authApi.post("/user/enable?accountId={accountId}", params, Void.class);
+    }
+
 }

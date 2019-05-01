@@ -88,6 +88,12 @@ public class RegisterApplication {
         return createRestApiTemplate(restTemplate, profilesApiEndpoint);
     }
 
+    @Bean("notificationApi")
+    public RestApiTemplate notificationRestTemplate(@Qualifier("oAuth2RestTemplate") RestTemplate restTemplate,
+                                                    @Value("${andband.notification-service.endpoint}") String notificationEndpoint) {
+        return createRestApiTemplate(restTemplate, notificationEndpoint);
+    }
+
     private RestApiTemplate createRestApiTemplate(RestTemplate restTemplate, String apiEndpoint) {
         RestApiTemplate restApiTemplate = new RestApiTemplate(restTemplate, apiEndpoint);
         HttpHeaders headers = new HttpHeaders();

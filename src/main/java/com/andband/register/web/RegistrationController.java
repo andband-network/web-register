@@ -21,4 +21,10 @@ public class RegistrationController {
         registrationService.registerNewUser(request);
     }
 
+    @PostMapping("/confirm/{token}")
+    @ResponseStatus(HttpStatus.OK)
+    public void confirmRegistration(@PathVariable("token") String token) {
+        registrationService.confirmRegistration(token);
+    }
+
 }
