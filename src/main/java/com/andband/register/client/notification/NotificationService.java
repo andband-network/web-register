@@ -16,7 +16,7 @@ public class NotificationService {
     public void userRegistration(String email, String userName, String tokenString) {
         NotificationRequest request = new NotificationRequest();
         request.setEmail(email);
-        request.setUserTo(userName);
+        request.setToProfileName(userName);
         request.setText(tokenString);
         notificationApi.post("/notification/user-registration", request, Void.class);
     }
