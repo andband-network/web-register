@@ -1,16 +1,19 @@
 package com.andband.register.web;
 
-import javax.validation.constraints.NotNull;
+import com.andband.register.web.validation.Email;
+import com.andband.register.web.validation.Password;
+
+import javax.validation.constraints.NotBlank;
 
 public class Request {
 
-    @NotNull
+    @NotBlank
     private String name;
 
-    @NotNull
+    @Email
     private String email;
 
-    @NotNull
+    @Password
     private String password;
 
     public String getName() {

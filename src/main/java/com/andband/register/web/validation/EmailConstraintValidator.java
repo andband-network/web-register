@@ -1,5 +1,7 @@
 package com.andband.register.web.validation;
 
+import org.springframework.util.StringUtils;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
@@ -14,7 +16,7 @@ public class EmailConstraintValidator implements ConstraintValidator<Email, Stri
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
-        return email.matches(EMAIL_REGEX);
+        return !StringUtils.isEmpty(email) && email.matches(EMAIL_REGEX);
     }
 
 }
