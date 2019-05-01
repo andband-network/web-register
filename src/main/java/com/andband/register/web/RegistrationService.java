@@ -43,6 +43,8 @@ class RegistrationService {
         profilesService.createProfile(account.getId(), account.getName());
 
         tokenService.deleteToken(token);
+
+        notificationService.confirmRegistration(account.getEmail(), account.getName());
     }
 
 }

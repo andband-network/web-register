@@ -21,4 +21,11 @@ public class NotificationService {
         notificationApi.post("/notification/user-registration", request, Void.class);
     }
 
+    public void confirmRegistration(String email, String userName) {
+        NotificationRequest request = new NotificationRequest();
+        request.setEmail(email);
+        request.setToProfileName(userName);
+        notificationApi.post("/notification/confirm-registration", request, Void.class);
+    }
+
 }
