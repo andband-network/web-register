@@ -16,6 +16,9 @@ public class Request {
     @Password
     private String password;
 
+    @NotBlank
+    private String captchaToken;
+
     public String getName() {
         return name;
     }
@@ -38,6 +41,14 @@ public class Request {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCaptchaToken() {
+        return captchaToken;
+    }
+
+    public void setCaptchaToken(String captchaToken) {
+        this.captchaToken = captchaToken;
     }
 
 }

@@ -47,16 +47,21 @@ public class RegisterApplication {
         return resource;
     }
 
-    @LoadBalanced
     @Bean("restTemplate")
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
         return builder.build();
     }
 
     @LoadBalanced
+    @Bean("loadBalancedRestTemplate")
+    public RestTemplate loadBalancedRestTemplate(RestTemplateBuilder builder) {
+        return builder.build();
+    }
+
+    @LoadBalanced
     @Bean("oAuth2RestTemplate")
     public OAuth2RestTemplate oAuth2RestTemplate(OAuth2ProtectedResourceDetails resourceDetails,
-                                                 @Qualifier("restTemplate") RestTemplate restTemplate) {
+                                                 @Qualifier("loadBalancedRestTemplate") RestTemplate restTemplate) {
         OAuth2ClientContext context = new DefaultOAuth2ClientContext(new DefaultAccessTokenRequest());
         OAuth2RestTemplate oAuth2RestTemplate = new OAuth2RestTemplate(resourceDetails, context);
 
@@ -90,8 +95,14 @@ public class RegisterApplication {
 
     @Bean("notificationApi")
     public RestApiTemplate notificationRestTemplate(@Qualifier("oAuth2RestTemplate") RestTemplate restTemplate,
-                                                    @Value("${andband.notification-service.endpoint}") String notificationEndpoint) {
+                                                    @Value("${andband.notification-api.endpoint}") String notificationEndpoint) {
         return createRestApiTemplate(restTemplate, notificationEndpoint);
+    }
+
+    @Bean("recaptchaApi")
+    public RestApiTemplate recaptchaRestTemplate(@Qualifier("restTemplate") RestTemplate restTemplate,
+                                                    @Value("${google.recaptcha-api.endpoint}") String recaptchaEndpoint) {
+        return createRestApiTemplate(restTemplate, recaptchaEndpoint);
     }
 
     private RestApiTemplate createRestApiTemplate(RestTemplate restTemplate, String apiEndpoint) {
