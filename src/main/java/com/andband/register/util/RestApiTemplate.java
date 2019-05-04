@@ -70,6 +70,16 @@ public class RestApiTemplate {
         return response.getBody();
     }
 
+    public void delete(String path) {
+        String url = apiUri + path;
+        restTemplate.delete(url);
+    }
+
+    public void delete(String path, Map<String, ?> params) {
+        String url = apiUri + path;
+        restTemplate.delete(url, params);
+    }
+
     private boolean isSuccess(HttpStatus httpStatus) {
         switch (httpStatus) {
             case OK:

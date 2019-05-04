@@ -5,6 +5,7 @@ import com.andband.register.client.accounts.AccountsService;
 import com.andband.register.client.auth.AuthService;
 import com.andband.register.client.notification.NotificationService;
 import com.andband.register.client.profiles.ProfilesService;
+import com.andband.register.exception.ApplicationException;
 import com.andband.register.persistence.RegistrationToken;
 import com.andband.register.service.TokenService;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,8 @@ class RegistrationService {
 
     void confirmRegistration(String tokenString) {
         RegistrationToken token = tokenService.getRegistrationToken(tokenString);
-        tokenService.validateToken(token);
+
+        validateToken(token);
 
         Account account = accountsService.getAccountFromId(token.getAccountId());
         authService.enableUser(account.getId());
@@ -45,6 +47,22 @@ class RegistrationService {
         tokenService.deleteToken(token);
 
         notificationService.confirmRegistration(account.getEmail(), account.getName());
+    }
+
+    private void validateToken(RegistrationToken token) {
+        if (token == null) {
+            throw new ApplicationException("invalid token");
+        }
+
+        if (tokenService.tokenIsExpired(token)) {
+            deleteUserData(token.getAccountId());
+            throw new ApplicationException("Verification token has expired");
+        }
+    }
+
+    private void deleteUserData(String accountId) {
+        accountsService.deleteAccount(accountId);
+        authService.deleteUser(accountId);
     }
 
 }

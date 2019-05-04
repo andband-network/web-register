@@ -1,6 +1,5 @@
 package com.andband.register.service;
 
-import com.andband.register.exception.ApplicationException;
 import com.andband.register.persistence.RegistrationToken;
 import com.andband.register.persistence.RegistrationTokenRepository;
 import com.andband.register.util.TokenUtil;
@@ -34,17 +33,7 @@ public class TokenService {
         tokenRepository.delete(token);
     }
 
-    public void validateToken(RegistrationToken token) {
-        if (token == null) {
-            throw new ApplicationException("token does not exist");
-        }
-
-        if (tokenIsExpired(token)) {
-            throw new ApplicationException("Verification token has expired");
-        }
-    }
-
-    private boolean tokenIsExpired(RegistrationToken token) {
+    public boolean tokenIsExpired(RegistrationToken token) {
         return token.getExpiryDate().getTime() < System.currentTimeMillis();
     }
 

@@ -24,4 +24,8 @@ public class AccountsService {
         return accountsApi.post("/accounts", account, Account.class);
     }
 
+    public void deleteAccount(String accountId) {
+        accountsApi.delete("/accounts/" + accountId);
+    }
+
 }

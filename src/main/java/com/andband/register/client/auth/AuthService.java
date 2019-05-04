@@ -30,4 +30,10 @@ public class AuthService {
         authApi.post("/user/enable?accountId={accountId}", params, Void.class);
     }
 
+    public void deleteUser(String accountId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("accountId", accountId);
+        authApi.delete("/user?accountId={accountId}", params);
+    }
+
 }
