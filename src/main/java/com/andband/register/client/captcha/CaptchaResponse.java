@@ -1,9 +1,16 @@
 package com.andband.register.client.captcha;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CaptchaResponse {
 
+    @JsonProperty("success")
     private boolean success;
+
+    @JsonProperty("challenge_ts")
     private String challengeTs;
+
+    @JsonProperty("hostname")
     private String hostname;
 
     public boolean isSuccess() {
