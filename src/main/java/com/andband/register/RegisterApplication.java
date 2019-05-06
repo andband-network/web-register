@@ -101,7 +101,7 @@ public class RegisterApplication {
 
     @Bean("recaptchaApi")
     public RestApiTemplate recaptchaRestTemplate(@Qualifier("restTemplate") RestTemplate restTemplate,
-                                                    @Value("${google.recaptcha-api.endpoint}") String recaptchaEndpoint) {
+                                                 @Value("${google.recaptcha-api.endpoint}") String recaptchaEndpoint) {
         return createRestApiTemplate(restTemplate, recaptchaEndpoint);
     }
 

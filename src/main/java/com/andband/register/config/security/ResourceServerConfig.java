@@ -1,4 +1,4 @@
-package com.andband.register.security;
+package com.andband.register.config.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +13,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 .antMatchers("/register/**").anonymous()
                 .anyRequest().authenticated()
                 .and()

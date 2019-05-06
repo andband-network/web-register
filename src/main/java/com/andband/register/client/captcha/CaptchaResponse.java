@@ -2,6 +2,8 @@ package com.andband.register.client.captcha;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class CaptchaResponse {
 
     @JsonProperty("success")
@@ -12,6 +14,9 @@ public class CaptchaResponse {
 
     @JsonProperty("hostname")
     private String hostname;
+
+    @JsonProperty("error-codes")
+    private List<String> errorCodes;
 
     public boolean isSuccess() {
         return success;
@@ -35,6 +40,14 @@ public class CaptchaResponse {
 
     public void setHostname(String hostname) {
         this.hostname = hostname;
+    }
+
+    public List<String> getErrorCodes() {
+        return errorCodes;
+    }
+
+    public void setErrorCodes(List<String> errorCodes) {
+        this.errorCodes = errorCodes;
     }
 
 }
