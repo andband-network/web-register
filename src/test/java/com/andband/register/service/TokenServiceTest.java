@@ -83,7 +83,7 @@ public class TokenServiceTest {
     @Test
     public void testTokenIsExpiredNotExpired() {
         RegistrationToken registrationToken = new RegistrationToken();
-        registrationToken.setExpiryDate(new Date(System.currentTimeMillis() - 999999));
+        registrationToken.setExpiryDate(new Date(System.currentTimeMillis() + 999999));
         boolean tokenIsExpired = tokenService.tokenIsExpired(registrationToken);
 
         assertThat(tokenIsExpired).isFalse();
@@ -92,7 +92,7 @@ public class TokenServiceTest {
     @Test
     public void testTokenIsExpiredIsExpired() {
         RegistrationToken registrationToken = new RegistrationToken();
-        registrationToken.setExpiryDate(new Date(System.currentTimeMillis() + 99999));
+        registrationToken.setExpiryDate(new Date(System.currentTimeMillis() - 99999));
         boolean tokenIsExpired = tokenService.tokenIsExpired(registrationToken);
 
         assertThat(tokenIsExpired).isTrue();

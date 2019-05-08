@@ -34,7 +34,7 @@ public class TokenService {
     }
 
     public boolean tokenIsExpired(RegistrationToken token) {
-        return token.getExpiryDate().getTime() > System.currentTimeMillis();
+        return token.getExpiryDate().getTime() < System.currentTimeMillis();
     }
 
 }
