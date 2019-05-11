@@ -16,7 +16,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<Password
     public boolean isValid(String password, ConstraintValidatorContext context) {
         boolean isValidPassword = true;
 
-        if (StringUtils.isEmpty(password) && password.length() < 4) {
+        if (StringUtils.isEmpty(password) && password.length() < 8) {
             isValidPassword = false;
         }
 

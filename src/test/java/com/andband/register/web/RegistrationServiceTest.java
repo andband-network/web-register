@@ -52,7 +52,7 @@ public class RegistrationServiceTest {
         String tokenString = "tokenString123";
 
         Request request = new Request();
-        request.setName(name);
+        request.setUsername(name);
         request.setEmail(email);
         request.setPassword(password);
 
